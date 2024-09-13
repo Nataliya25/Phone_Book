@@ -13,6 +13,6 @@ public class RegistrationTests extends ApplicationManager {
                 .clickBtnLoginHeader()
                 .typeLoginForm("Email123!@gmail.com","Pasword888!")
                 .clickBtnREgistrationPositive()
-                .isElementContantPresent());
+                .isElementContactPresent());
     }
 }
