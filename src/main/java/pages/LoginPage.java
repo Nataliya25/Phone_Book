@@ -50,6 +50,11 @@ public class LoginPage extends BasePage{
         return new ContactPage(driver);
     }
 
+    public LoginPage clickBtnRegistrationNegative(){
+        btnRegistration.click();
+        return this;
+    }
+
     public LoginPage clickBtnLoginNegative() {
         btnLoginSubmit.click();
         return this;
@@ -67,6 +72,10 @@ public class LoginPage extends BasePage{
 
     public boolean isTextInElementPresent_errorMessage(){
         return isElementPresent(errorMessageLogin, "Login Failed with code 401");
+    }
+
+    public boolean isTextInElementPresent_errorMessage1(){
+        return isElementPresent(errorMessageLogin, "Registration failed with code 400");
     }
 
 
