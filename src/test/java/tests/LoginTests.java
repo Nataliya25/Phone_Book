@@ -27,4 +27,15 @@ public class LoginTests extends ApplicationManager {
                 .isTextInElementPresent_errorMessage())
         ;
     }
+
+    @Test
+    public void loginNegativeTest_wrongEmail(){
+        Assert.assertTrue(new HomePage(getDriver())
+                .clickBtnLoginHeader()
+                .typeLoginForm("@mail.com", "Qwerty13333")
+                .clickBtnLoginNegative()
+                .closeAlert()
+                .isTextInElementPresent_errorMessage())
+        ;
+    }
 }

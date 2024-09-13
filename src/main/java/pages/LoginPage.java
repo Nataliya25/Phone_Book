@@ -45,7 +45,7 @@ public class LoginPage extends BasePage{
         return new ContactPage(driver);
     }
 
-    public ContactPage clickBtnREgistrationPositive(){
+    public ContactPage clickBtnRegistrationPositive(){
         btnRegistration.click();
         return new ContactPage(driver);
     }
@@ -68,6 +68,8 @@ public class LoginPage extends BasePage{
     public boolean isTextInElementPresent_errorMessage(){
         return isElementPresent(errorMessageLogin, "Login Failed with code 401");
     }
+
+
     //qa44_mail@gmail.com
     //Gywer!!@
 }

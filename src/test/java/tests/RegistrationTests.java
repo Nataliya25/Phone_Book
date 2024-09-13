@@ -12,7 +12,7 @@ public class RegistrationTests extends ApplicationManager {
         Assert.assertTrue(new HomePage(getDriver())
                 .clickBtnLoginHeader()
                 .typeLoginForm("Email123!@gmail.com","Pasword888!")
-                .clickBtnREgistrationPositive()
+                .clickBtnRegistrationPositive()
                 .isElementContactPresent());
     }
 }
