@@ -1,5 +1,6 @@
 package pages;
 
+import dto.UserDTO;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -34,9 +35,15 @@ public class LoginPage extends BasePage{
     @FindBy(xpath = "//div[@class='login_login__3EHKB']/div")
     WebElement errorMessageLogin;
 
-    public LoginPage typeLoginForm(String email, String password){
+    public LoginPage typeLoginForm(String email,String password){
         inputEmail.sendKeys(email);
         inputPassword.sendKeys(password);
+        return this;
+    }
+
+    public LoginPage typeLoginForm(UserDTO user){
+        inputEmail.sendKeys(user.getEmail());
+        inputPassword.sendKeys(user.getPassword());
         return this;
     }
 
@@ -74,8 +81,8 @@ public class LoginPage extends BasePage{
         return isElementPresent(errorMessageLogin, "Login Failed with code 401");
     }
 
-    public boolean isTextInElementPresent_errorMessage1(){
-        return isElementPresent(errorMessageLogin, "Registration failed with code 400");
+    public boolean isTextInElementPresent_errorMessage1(String text){
+        return isElementPresent(errorMessageLogin, text);
     }
 
 

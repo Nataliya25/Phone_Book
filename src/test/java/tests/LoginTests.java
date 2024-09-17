@@ -29,10 +29,21 @@ public class LoginTests extends ApplicationManager {
     }
 
     @Test
-    public void loginNegativeTest_wrongEmail(){
+    public void loginNegativeTest_wrongEmail_UnregUser(){
         Assert.assertTrue(new HomePage(getDriver())
                 .clickBtnLoginHeader()
-                .typeLoginForm("@mail.com", "Qwerty13333")
+                .typeLoginForm("WillClass123@mail.com", "Qwerty13333!")
+                .clickBtnLoginNegative()
+                .closeAlert()
+                .isTextInElementPresent_errorMessage())
+        ;
+    }
+
+    @Test
+    public void loginNegativeTest_wrongEmail_WOAt(){
+        Assert.assertTrue(new HomePage(getDriver())
+                .clickBtnLoginHeader()
+                .typeLoginForm("WillClass123mail.com", "Qwerty13333!")
                 .clickBtnLoginNegative()
                 .closeAlert()
                 .isTextInElementPresent_errorMessage())

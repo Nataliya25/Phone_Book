@@ -1,9 +1,13 @@
 package tests;
 
+import dto.UserDTO;
 import manager.ApplicationManager;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import pages.HomePage;
+
+import static utils.RandomUtils.generateEmail;
+import static utils.RandomUtils.generateString;
 
 import java.util.Random;
 
@@ -20,14 +24,14 @@ public class RegistrationTests extends ApplicationManager {
 
     @Test
     public void registrationNegativeTest_wrongEmail() {
-        int i = new Random().nextInt(1000);
-        String email = "nt_tel" + i + "mail.com";
-        Assert.assertTrue(new HomePage(getDriver())
+        String email = generateString(10);
+        UserDTO user = new UserDTO(email,"Qwerty123!");
+        new HomePage(getDriver())
                 .clickBtnLoginHeader()
-                .typeLoginForm(email, "Pasword888!")
+                .typeLoginForm(user)
                 .clickBtnRegistrationNegative()
                 .closeAlert()
-                .isTextInElementPresent_errorMessage1())
+                .isTextInElementPresent_errorMessage1("Registration failed with code 400")
         ;
     }
 }
