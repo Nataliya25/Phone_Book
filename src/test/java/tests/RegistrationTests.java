@@ -15,9 +15,10 @@ public class RegistrationTests extends ApplicationManager {
 
     @Test
     public void registrationPositiveTest() {
+        String email = generateEmail(10);
         Assert.assertTrue(new HomePage(getDriver())
                 .clickBtnLoginHeader()
-                .typeLoginForm("Email123!@gmail.com", "Pasword888!")
+                .typeLoginForm(email, "Pasword888!")
                 .clickBtnRegistrationPositive()
                 .isElementContactPresent());
     }
