@@ -1,11 +1,16 @@
 package pages;
 
 import dto.ContactDTOLombok;
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
 
 public class AddPage extends BasePage{
 
@@ -47,4 +52,25 @@ public class AddPage extends BasePage{
         btnSaveContact.click();
         return new ContactPage(driver);
     }
+
+    public AddPage clickBtnSaveContactNegative(){
+        btnSaveContact.click();
+        return this;
+    }
+
+    public boolean isElementContactPresent(){
+        return btnSaveContact.isDisplayed();
+    }
+
+    public AddPage closeAlert_add() {
+        pause(3);
+        Alert alert = new WebDriverWait(driver, Duration.ofSeconds(3))
+                .until(ExpectedConditions.alertIsPresent());
+
+        System.out.println(alert.getText());
+        alert.accept();
+        return new AddPage(driver);
+    }
+
+
 }

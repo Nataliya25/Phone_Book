@@ -16,6 +16,12 @@ public class RandomUtils {
         return (generateString(length) + "@" + domain);
     }
 
+    public static String generateEmail_withSpace(int length){
+        String [] domains = {"mail.com", "gmail.com", "yahoo.com", "example.com"};
+        String domain = domains [random.nextInt(domains.length)];
+        return (generateString(length) + "@" + domain + " ");
+    }
+
     public static String generateString(int length){
         String characters = "abcdefghijklmnopqrstuvwxyz0123456789";
         char[] randomString = new char[length];

@@ -15,6 +15,7 @@ import utils.HeaderMenuItem;
 import static pages.BasePage.clickButtonsOnHeader;
 import static utils.RandomUtils.*;
 
+
 public class AddContactsTests extends ApplicationManager {
 
     UserDTO user = new UserDTO("qa_mail@mail.com", "Qwerty123!");
@@ -44,6 +45,59 @@ public class AddContactsTests extends ApplicationManager {
         Assert.assertTrue(addPage.fillContactForm(contact)
                 .clickBtnSaveContactPositive()
                 .isLastPhoneEquals(contact.getPhone()))
+        ;
+    }
+
+    @Test
+    public void addNewCont_NegativeTest_WOUT_name(){  //similarly, we can remove each required field one by one
+        ContactDTOLombok contact = ContactDTOLombok.builder()
+                .name("")
+                .lastName(generateString(10))
+                .phone(generatePhone(10))
+                .email(generateEmail(12))
+                .address(generateString(20))
+                .description(generateString(10))
+                .build();
+
+        Assert.assertTrue(addPage.fillContactForm(contact)
+                .clickBtnSaveContactNegative()
+                .isElementContactPresent())
+        ;
+    }
+
+    @Test
+    public void addNewCont_NegativeTest_WrongEmail(){
+        ContactDTOLombok contact = ContactDTOLombok.builder()
+                .name(generateString(8))
+                .lastName(generateString(10))
+                .phone(generatePhone(10))
+                .email(generateString(12))
+                .address(generateString(20))
+                .description(generateString(10))
+                .build();
+
+        Assert.assertTrue(addPage.fillContactForm(contact)
+                .clickBtnSaveContactNegative()
+                .closeAlert_add()
+                .isElementContactPresent())
+        ;
+    }
+
+    @Test
+    public void addNewCont_NegativeTest_WrongEmail_WithSpace(){
+        ContactDTOLombok contact = ContactDTOLombok.builder()
+                .name(generateString(8))
+                .lastName(generateString(10))
+                .phone(generatePhone(10))
+                .email(generateEmail_withSpace(12))
+                .address(generateString(20))
+                .description(generateString(10))
+                .build();
+
+        Assert.assertTrue(addPage.fillContactForm(contact)
+                .clickBtnSaveContactNegative()
+                .closeAlert_add()
+                .isElementContactPresent())
         ;
     }
 }
