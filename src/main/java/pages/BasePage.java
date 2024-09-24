@@ -61,4 +61,9 @@ public class BasePage {
             default -> throw new IllegalArgumentException("Invalid parametr header menu");
         }
     }
+
+    public boolean urlContains(String urlPart, int time){
+        return new WebDriverWait(driver,Duration.ofSeconds(time))
+                .until(ExpectedConditions.urlContains(urlPart));
+    }
 }
