@@ -1,9 +1,6 @@
 package pages;
 
-import org.openqa.selenium.Alert;
-import org.openqa.selenium.TimeoutException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
@@ -24,6 +21,12 @@ public class ContactPage extends BasePage{
     WebElement btnContact;
     @FindBy(xpath = "//div[@class='contact-page_leftdiv__yhyke']//div[@class='contact-item_card__2SOIM'][last()]/h3")
     WebElement lastPhoneInList;
+    @FindBy(xpath = "//div[@class='contact-page_leftdiv__yhyke']//div[@class='contact-item_card__2SOIM']")
+    WebElement firstContactOnList;
+
+    @FindBy(xpath = "//button[text()='Remove']")
+    WebElement btnRemoveContact;
+
 
     public boolean isElementContactPresent(){
         return btnContact.isDisplayed();
@@ -49,5 +52,17 @@ public class ContactPage extends BasePage{
             e.printStackTrace();
             return false;
         }
+    }
+
+    public void clickFirstElementOfContactsList() {
+        firstContactOnList.click();
+    }
+    public void clickBtnRemoveContact() {
+        btnRemoveContact.click();
+    }
+
+    public int getContactNumber() {
+        pause(2);
+        return driver.findElements(By.xpath("//div[@class='contact-item_card__2SOIM']")).size();
     }
 }

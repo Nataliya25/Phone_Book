@@ -1,9 +1,17 @@
 package tests;
 
+import org.openqa.selenium.TakesScreenshot;
 import manager.ApplicationManager;
 import org.testng.Assert;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import pages.HomePage;
+import utils.TestNGListener;
+
+import static utils.TakeScreenShot.takeScreenShot;
+
+@Listeners(TestNGListener.class)
+
 
 public class LoginTests extends ApplicationManager {
 
@@ -14,6 +22,9 @@ public class LoginTests extends ApplicationManager {
                 .typeLoginForm("qa_mail@mail.com", "Qwerty123!")
                 .clickBtnLoginPositive()
                 .isElementContactPresent();
+
+        takeScreenShot((TakesScreenshot) getDriver());
+
         Assert.assertTrue(result);
     }
 

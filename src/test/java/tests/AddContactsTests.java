@@ -6,16 +6,19 @@ import dto.UserDTO;
 import manager.ApplicationManager;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import pages.AddPage;
 import pages.ContactPage;
 import pages.HomePage;
 import pages.LoginPage;
 import utils.HeaderMenuItem;
+import utils.TestNGListener;
 
 import static pages.BasePage.clickButtonsOnHeader;
 import static utils.RandomUtils.*;
 
+@Listeners(TestNGListener.class)
 
 public class AddContactsTests extends ApplicationManager {
 
