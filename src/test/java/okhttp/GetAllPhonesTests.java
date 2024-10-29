@@ -58,6 +58,41 @@ public class GetAllPhonesTests implements BaseApi {
         }
         Assert.assertTrue(response.isSuccessful());
     }
+
+    @Test
+    public void getAllUserPhonesNegativeTest_withoutToken_401(){
+        Request request = new Request.Builder()
+                .url(BASE_URL+GET_ALL_CONTACTS_PATH)
+                .get()
+                .build();
+        Response response;
+        try {
+            response = OK_HTTP_CLIENT.newCall(request).execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        Assert.assertEquals(response.code(),403);
+    }
+
+    @Test
+    public void getAllUserPhonesNegativeTest_wrongToken_401(){
+        String wrongToken = token.getToken()+"123";
+        Request request = new Request.Builder()
+                .url(BASE_URL+GET_ALL_CONTACTS_PATH)
+                .addHeader("Authorization", wrongToken)
+                .get()
+                .build();
+        Response response;
+        try {
+            response = OK_HTTP_CLIENT.newCall(request).execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        Assert.assertEquals(response.code(),401);
+    }
+
+
+    //++++++++++++++++++++++++++++++++++++++++++++++++++++++
     @Test
     public void getAllUserPhonesPositiveTest_getContactList() throws IOException {
         Request request = new Request.Builder()
