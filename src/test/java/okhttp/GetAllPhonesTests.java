@@ -1,53 +1,52 @@
 package okhttp;
 
 import dto.ContactDTOLombok;
-import dto.ContactsDTO;
-import dto.TokenDTO;
-import dto.UserDTO;
+import dto.ContactsDto;
+import dto.TokenDto;
+import dto.UserDto;
 import interfaces.BaseApi;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 import org.testng.Assert;
-import org.testng.annotations.BeforeTest;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
 
+import static utils.RandomUtils.generateEmail;
 import static utils.PropertiesReader.getProperty;
 
 public class GetAllPhonesTests implements BaseApi {
 
-
-    TokenDTO token;
-
-    @BeforeTest
-    public void loginUser() {
-        UserDTO user = new UserDTO(getProperty("data.properties", "email"),
+    TokenDto token;
+    @BeforeClass
+    public void loginUser(){
+        UserDto user = new UserDto(getProperty("data.properties", "email"),
                 getProperty("data.properties", "password"));
         RequestBody requestBody = RequestBody.create(GSON.toJson(user), JSON);
         Request request = new Request.Builder()
-                .url(BASE_URL + LOGIN_PATH)
+                .url(BASE_URL+LOGIN_PATH)
                 .post(requestBody)
                 .build();
         Response response;
         try {
             response = OK_HTTP_CLIENT.newCall(request).execute();
-            token = GSON.fromJson(response.body().string(), TokenDTO.class);
+            token  = GSON.fromJson(response.body().string(), TokenDto.class);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        // if(token != null){
-        //     System.out.println(token.toString());
-        // }else {
-        //    System.out.println("Something went wrong !!!");
+//        if(token != null){
+//            System.out.println(token.toString());
+//        }else {
+//            System.out.println("Something went wrong !!!");
+//        }
     }
 
-
     @Test
-    public void getAllUserPhones_PositiveTest() {
+    public void getAllUserPhonesPositiveTest(){
         Request request = new Request.Builder()
-                .url(BASE_URL + GET_ALL_CONTACTS_PATH)
+                .url(BASE_URL+GET_ALL_CONTACTS_PATH)
                 .addHeader("Authorization", token.getToken())
                 .get()
                 .build();
@@ -59,12 +58,10 @@ public class GetAllPhonesTests implements BaseApi {
         }
         Assert.assertTrue(response.isSuccessful());
     }
-
-
     @Test
     public void getAllUserPhonesPositiveTest_getContactList() throws IOException {
         Request request = new Request.Builder()
-                .url(BASE_URL + GET_ALL_CONTACTS_PATH)
+                .url(BASE_URL+GET_ALL_CONTACTS_PATH)
                 .addHeader("Authorization", token.getToken())
                 .get()
                 .build();
@@ -74,13 +71,13 @@ public class GetAllPhonesTests implements BaseApi {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-      if(response.isSuccessful()){
-          ContactsDTO contacts = GSON.fromJson(response.body().string(), ContactsDTO.class);
-          for(ContactDTOLombok c: contacts.getContacts()){
-              System.out.println(c);
-          }
-      }else{
-          System.out.println("WRONG");
-      }
+        if(response.isSuccessful()){
+            ContactsDto contacts = GSON.fromJson(response.body().string(), ContactsDto.class);
+            System.out.println(contacts);
+            for (ContactDTOLombok c:contacts.getContacts()) {
+                System.out.println(c);
+            }
+        }else
+            System.out.println("Something went wrong ");
     }
 }

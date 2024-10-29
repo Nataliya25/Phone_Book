@@ -1,6 +1,6 @@
 package tests;
 
-import dto.UserDTO;
+import dto.UserDto;
 import manager.ApplicationManager;
 import org.testng.Assert;
 import org.testng.annotations.Listeners;
@@ -11,7 +11,6 @@ import utils.TestNGListener;
 import static utils.RandomUtils.generateEmail;
 import static utils.RandomUtils.generateString;
 
-import java.util.Random;
 @Listeners(TestNGListener.class)
 
 public class RegistrationTests extends ApplicationManager {
@@ -29,7 +28,7 @@ public class RegistrationTests extends ApplicationManager {
     @Test
     public void registrationNegativeTest_wrongEmail() {
         String email = generateString(10);
-        UserDTO user = new UserDTO(email,"Qwerty123!");
+        UserDto user = new UserDto(email,"Qwerty123!");
         new HomePage(getDriver())
                 .clickBtnLoginHeader()
                 .typeLoginForm(user)

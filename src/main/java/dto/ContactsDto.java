@@ -8,6 +8,6 @@ import lombok.*;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class ContactsDTO {
+public class ContactsDto {
     private ContactDTOLombok [] contacts;
 }

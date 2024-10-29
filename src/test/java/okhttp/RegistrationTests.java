@@ -1,8 +1,8 @@
 package okhttp;
 
 import dto.ErrorMessageDTO;
-import dto.TokenDTO;
-import dto.UserDTO;
+import dto.TokenDto;
+import dto.UserDto;
 import interfaces.BaseApi;
 import okhttp3.Request;
 import okhttp3.RequestBody;
@@ -22,7 +22,7 @@ public class RegistrationTests implements BaseApi {
 
     @Test
     public void registrationPositiveTest(){
-        UserDTO user = new UserDTO(generateEmail(10),"Yjfhdfsf456!");
+        UserDto user = new UserDto(generateEmail(10),"Yjfhdfsf456!");
         RequestBody requestBody = RequestBody.create(GSON.toJson(user), JSON);
         Request request = new Request.Builder()
                 .url(BASE_URL+REGISTRATION_PATH)
@@ -39,7 +39,7 @@ public class RegistrationTests implements BaseApi {
 
     @Test
     public void registrationPositiveTest_validateToken() throws IOException {
-        UserDTO user = new UserDTO(generateEmail(10),"Yjfhdfsf456!");
+        UserDto user = new UserDto(generateEmail(10),"Yjfhdfsf456!");
         RequestBody requestBody = RequestBody.create(GSON.toJson(user), JSON);
         Request request = new Request.Builder()
                 .url(BASE_URL+REGISTRATION_PATH)
@@ -52,7 +52,7 @@ public class RegistrationTests implements BaseApi {
             throw new RuntimeException(e);
         }
         if(response.isSuccessful()){
-            TokenDTO token = GSON.fromJson(response.body().string(),TokenDTO.class);
+            TokenDto token = GSON.fromJson(response.body().string(), TokenDto.class);
             System.out.println("TOKEN:  " + token.getToken());
             Assert.assertEquals(response.code(),200);
         }else{
@@ -64,7 +64,7 @@ public class RegistrationTests implements BaseApi {
 
     @Test
     public void registrationNegativeTest_() throws IOException {
-        UserDTO user = new UserDTO(generateEmail_withSpace(10),"Wjfhdfsf45!");
+        UserDto user = new UserDto(generateEmail_withSpace(10),"Wjfhdfsf45!");
         RequestBody requestBody = RequestBody.create(GSON.toJson(user), JSON);
         Request request = new Request.Builder()
                 .url(BASE_URL+REGISTRATION_PATH)

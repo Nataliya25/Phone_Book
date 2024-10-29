@@ -1,6 +1,6 @@
 package pages;
 
-import dto.UserDTO;
+import dto.UserDto;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -41,7 +41,7 @@ public class LoginPage extends BasePage{
         return this;
     }
 
-    public LoginPage typeLoginForm(UserDTO user){
+    public LoginPage typeLoginForm(UserDto user){
         inputEmail.sendKeys(user.getUsername());
         inputPassword.sendKeys(user.getPassword());
         return this;

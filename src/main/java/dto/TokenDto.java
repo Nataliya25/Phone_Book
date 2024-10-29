@@ -10,7 +10,7 @@ import lombok.*;
 @AllArgsConstructor
 
 
-public class TokenDTO {
+public class TokenDto {
     private String token;
 
 }
