@@ -18,13 +18,13 @@ public class EditContactsTests  extends ApplicationManager {
     ContactPage contactPage;
 
 
-    @BeforeMethod
+    @BeforeMethod(alwaysRun = true)
     public void login() {
         new HomePage(getDriver());
         LoginPage loginPage = clickButtonsOnHeader(HeaderMenuItem.LOGIN);
         contactPage = loginPage.typeLoginForm(user).clickBtnLoginPositive();
     }
-    @Test
+    @Test(groups = "smoke")
     public void editContactPositiveTest(){
 
 

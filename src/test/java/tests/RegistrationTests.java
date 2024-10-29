@@ -15,7 +15,7 @@ import static utils.RandomUtils.generateString;
 
 public class RegistrationTests extends ApplicationManager {
 
-    @Test
+    @Test(groups = "smoke")
     public void registrationPositiveTest() {
         String email = generateEmail(10);
         Assert.assertTrue(new HomePage(getDriver())
