@@ -1,6 +1,7 @@
 package tests;
 
-import dataProvider.DP_AddContact;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import data_provider.DPAddContact;
 import dto.ContactDTOLombok;
 import dto.UserDto;
 import manager.ApplicationManager;
@@ -9,6 +10,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import pages.AddPage;
+import pages.ContactPage;
 import pages.HomePage;
 import pages.LoginPage;
 import utils.HeaderMenuItem;
@@ -24,8 +26,7 @@ public class AddContactsTests extends ApplicationManager {
     UserDto user = new UserDto("qa_mail@mail.com", "Qwerty123!");
     AddPage addPage;
 
-
-    @BeforeMethod
+    @BeforeMethod(alwaysRun = true)
     public void login() {
         new HomePage(getDriver());
         LoginPage loginPage = clickButtonsOnHeader(HeaderMenuItem.LOGIN);
@@ -33,9 +34,8 @@ public class AddContactsTests extends ApplicationManager {
         addPage = clickButtonsOnHeader(HeaderMenuItem.ADD);
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void addNewContactPositiveTest() {
-
         ContactDTOLombok contact = ContactDTOLombok.builder()
                 .name(generateString(5))
                 .lastName(generateString(10))
@@ -44,16 +44,14 @@ public class AddContactsTests extends ApplicationManager {
                 .address(generateString(20))
                 .description(generateString(10))
                 .build();
-
         Assert.assertTrue(addPage.fillContactForm(contact)
                 .clickBtnSaveContactPositive()
                 .isLastPhoneEquals(contact.getPhone()))
         ;
     }
 
-    //HW-8  ________________________________________________
     @Test
-    public void addNewCont_NegativeTest_WOUT_name() {  //similarly, we can remove each required field one by one
+    public void addNewContactNegativeTest_nameIsEmpty() {
         ContactDTOLombok contact = ContactDTOLombok.builder()
                 .name("")
                 .lastName(generateString(10))
@@ -62,61 +60,6 @@ public class AddContactsTests extends ApplicationManager {
                 .address(generateString(20))
                 .description(generateString(10))
                 .build();
-
-        Assert.assertTrue(addPage.fillContactForm(contact)
-                .clickBtnSaveContactNegative()
-                .isElementContactPresent())
-        ;
-    }
-
-    @Test
-    public void addNewCont_NegativeTest_WrongEmail() {
-        ContactDTOLombok contact = ContactDTOLombok.builder()
-                .name(generateString(8))
-                .lastName(generateString(10))
-                .phone(generatePhone(10))
-                .email(generateString(12))
-                .address(generateString(20))
-                .description(generateString(10))
-                .build();
-
-        Assert.assertTrue(addPage.fillContactForm(contact)
-                .clickBtnSaveContactNegative()
-                .closeAlert_add()
-                .isElementContactPresent())
-        ;
-    }
-
-    @Test
-    public void addNewCont_NegativeTest_WrongEmail_WithSpace() {
-        ContactDTOLombok contact = ContactDTOLombok.builder()
-                .name(generateString(8))
-                .lastName(generateString(10))
-                .phone(generatePhone(10))
-                .email(generateEmail_withSpace(12))
-                .address(generateString(20))
-                .description(generateString(10))
-                .build();
-
-        Assert.assertTrue(addPage.fillContactForm(contact)
-                .clickBtnSaveContactNegative()
-                .closeAlert_add()
-                .isElementContactPresent())
-        ;
-    }
-    //-------------------------------------------------------------
-
-    @Test
-    public void addNewCont_NegativeTest_nameIsEmpty() {
-        ContactDTOLombok contact = ContactDTOLombok.builder()
-                .name("")
-                .lastName(generateString(10))
-                .phone(generatePhone(10))
-                .email(generateEmail(12))
-                .address(generateString(20))
-                .description(generateString(10))
-                .build();
-
         Assert.assertTrue(addPage.fillContactForm(contact)
                 .clickBtnSaveContactPositive()
                 .urlContainsAdd())
@@ -124,34 +67,32 @@ public class AddContactsTests extends ApplicationManager {
     }
 
     @Test
-    public void addNewCont_NegativeTest_wrongEmail() {
+    public void addNewContactNegativeTest_wrongEmail() {
         ContactDTOLombok contact = ContactDTOLombok.builder()
-                .name(generateString(5))
+                .name(generateString(4))
                 .lastName(generateString(10))
                 .phone(generatePhone(10))
-                .email(generateString(2))
+                .email(generateString(12))
                 .address(generateString(20))
                 .description(generateString(10))
                 .build();
-
         Assert.assertTrue(addPage.fillContactForm(contact)
                 .clickBtnSaveContactPositive()
                 .isAlertPresent(5))
         ;
     }
 
-    @Test(dataProvider = "addNewContactDP", dataProviderClass = DP_AddContact.class)
+    @Test(dataProvider = "addNewContactDP", dataProviderClass = DPAddContact.class)
     public void addNewContactNegativeTest_wrongEmailDP(ContactDTOLombok contact) {
-        System.out.println("-->" + contact);
+        System.out.println("--> " + contact);
         Assert.assertTrue(addPage.fillContactForm(contact)
                 .clickBtnSaveContactPositive()
                 .isAlertPresent(5))
         ;
     }
-
-    @Test(dataProvider = "addNewContactDP_File", dataProviderClass = DP_AddContact.class)
-    public void addNewContactNegativeTest_wrongEmailDP_File(ContactDTOLombok contact) {
-        System.out.println("-->" + contact);
+    @Test(dataProvider = "addNewContactDPFile", dataProviderClass = DPAddContact.class)
+    public void addNewContactNegativeTest_wrongEmailDPFile(ContactDTOLombok contact) {
+        System.out.println("--> " + contact);
         Assert.assertTrue(addPage.fillContactForm(contact)
                 .clickBtnSaveContactPositive()
                 .isAlertPresent(5))

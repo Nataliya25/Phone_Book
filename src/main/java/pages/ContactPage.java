@@ -9,6 +9,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+import java.util.List;
 
 public class ContactPage extends BasePage {
     public ContactPage(WebDriver driver) {
@@ -139,5 +140,24 @@ public class ContactPage extends BasePage {
                 .build();
         System.out.println(contact);
         return contact;
+    }
+
+    public int getQuantityListContact() {
+        return new WebDriverWait(driver, Duration.ofSeconds(10)).until(
+                ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//div[@class='contact-item_card__2SOIM']"))).size();
+        //return driver.findElements(By.xpath("//div[@class='contact-item_card__2SOIM']")).size();
+    }
+
+    public boolean isElementDeleteFromContactList(int quantityBeforeDelete) {
+        try {
+            List<WebElement> listEl = new WebDriverWait(driver, Duration.ofSeconds(10)).until(
+                    ExpectedConditions.numberOfElementsToBeLessThan(
+                            By.xpath("//div[@class='contact-item_card__2SOIM']"), quantityBeforeDelete));
+            System.out.println("after delete --> " + listEl.size());
+            return true;
+        } catch (org.openqa.selenium.TimeoutException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 }

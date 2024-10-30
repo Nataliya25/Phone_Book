@@ -6,10 +6,9 @@
         <parameter name="value1" value="10"/>
         <parameter name="value2" value="-25"/>
         <groups>
-            
-                    <run>
-                        <include name="parameter_tests"
-                    </run>
+            <run>
+                <include name="prameters_tests"/>
+            </run>
         </groups>
         <classes>
             <class name="tests.LoginTests"/>

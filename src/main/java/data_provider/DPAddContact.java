@@ -1,4 +1,4 @@
-package dataProvider;
+package data_provider;
 
 import dto.ContactDTOLombok;
 import org.testng.annotations.DataProvider;
@@ -13,7 +13,7 @@ import java.util.List;
 import static utils.RandomUtils.generatePhone;
 import static utils.RandomUtils.generateString;
 
-public class DP_AddContact {
+public class DPAddContact {
     @DataProvider
     public ContactDTOLombok[] addNewContactDP(){
         ContactDTOLombok contact1 = ContactDTOLombok.builder()

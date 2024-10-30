@@ -77,7 +77,7 @@ public class LoginPage extends BasePage{
         return new LoginPage(driver);
     }
 
-    public boolean isTextInElementPresent_errorMessage(){
+    public boolean isTextInElementPresent_errorMessage(String s){
         return isElementPresent(errorMessageLogin, "Login Failed with code 401");
     }
 
