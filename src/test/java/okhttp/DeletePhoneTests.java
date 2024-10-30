@@ -1,9 +1,6 @@
 package okhttp;
 
-import dto.ContactDTOLombok;
-import dto.ResponseMessageDto;
-import dto.TokenDto;
-import dto.UserDto;
+import dto.*;
 import interfaces.BaseApi;
 import okhttp3.Request;
 import okhttp3.RequestBody;
@@ -13,6 +10,7 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 
 import java.io.IOException;
 
@@ -88,5 +86,36 @@ public class DeletePhoneTests implements BaseApi {
             throw new RuntimeException(e);
         }
         Assert.assertTrue(response.isSuccessful());
+    }
+
+    SoftAssert softAssert = new SoftAssert();
+
+    @Test
+    public void deleteNagativeTest_ContactNotFound() throws IOException {
+
+        Request request = new Request.Builder()
+                .url(BASE_URL+GET_ALL_CONTACTS_PATH+"/"+contactId+"10000")
+                .addHeader("Authorization", token.getToken())
+                .delete()
+                .build();
+        Response response;
+        try {
+            response = OK_HTTP_CLIENT.newCall(request).execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        ErrorMessageDTO errorMessage = GSON.fromJson(response.body().string(), ErrorMessageDTO.class);
+
+       // System.out.println("Response code:   "+response.code());
+       // Assert.assertEquals(response.code(), 400);
+
+        softAssert.assertEquals(response.code(),400);
+        softAssert.assertEquals(errorMessage.getStatus(),400);
+        softAssert.assertEquals(errorMessage.getError(),"Bad Request");
+        System.out.println(errorMessage.getMessage());
+        softAssert.assertTrue(errorMessage.getMessage().toString().contains("not found"));
+
+        softAssert.assertAll();
     }
 }
